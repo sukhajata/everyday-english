@@ -1,0 +1,22 @@
+export default {
+    purple: "#781FA2",
+    amber: "#FFC107",
+    black: "#212121",
+    indigo: "#303F9F",
+    blue: "#536DFE",
+    green: "#4CAF50",
+    lightOrange: "orange",
+    red: "#FF0000",
+    white: "#FFFFFF",
+    gray: "#939393",
+    lightGray: "#D3D3D3",
+    lightLightGray: "#DEDEDE",
+    paleYellow: "#FFF9C4",
+    lime: "#CDDC39",
+    markerBlue: "#2E79C9",
+    markerPurple: "#473FB0",
+    markerYellow: "#CBC325",
+    markerRed: "#CB2A3D",
+    markerOrange: "#FF8A00",
+    markerViolet: "#CF6AD9"
+  };
