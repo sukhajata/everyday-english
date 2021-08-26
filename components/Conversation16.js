@@ -11,10 +11,11 @@ import settings from '../config/settings';
 import SoundMedia from './SoundMedia';
 import ButtonContine from './ButtonContinue';
 
-const Teaching4 = ({ slide, imageUrl, moveNextSlide }) => { 
-    const [cards, setCards] = useState([]);
-    const englishSpeaker = settings.firstLanguage === "en";
+const englishSpeaker = settings.firstLanguage === "en";
 
+const Conversation16 = ({ slide, imageUrl, moveNextSlide }) => { 
+    const [cards, setCards] = useState([]);
+    
     useEffect(() => {
         let newCards = [];
         slide.medias.forEach(media => {
@@ -75,20 +76,4 @@ const Teaching4 = ({ slide, imageUrl, moveNextSlide }) => {
     
 }
 
-export default Teaching4;
-
-/*
- <PlayArrowIcon 
-                                        onClick={() => this.playSound(media)}
-                                        fontSize="small" 
-                                        className={media.className}
-                                    />
-                                    {media.audioFileName &&
-                                        <Sound 
-                                            autoLoad={true}
-                                            url={this.getAudioUrl(media.audioFileName)}
-                                            playStatus={media.playingStatus || Sound.status.STOPPED}
-                                            onFinishedPlaying={() => this.onFinishedSpeaking(media)}
-                                        />
-                                    }
-                                    */
+export default Conversation16;

@@ -13,6 +13,7 @@ import Header from '../../components/Header';
 import settings from '../../config/settings';
 import api_en from '../../services/en.api';
 import api_th from '../../services/th.api';
+import { getLessons } from '../../services/supabaseClient';
 
 const API = settings.firstLanguage === 'en' ? api_en : api_th;
 
@@ -60,8 +61,11 @@ const Lessons = ({ lessons }) => (
 
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`${API.LESSONS}?moduleId=${params.moduleId}`);
-  const data = await res.json();
+  const data = await getLessons(params.moduleId);
+  // console.log(data);
+  // console.log(data);
+  //const res = await fetch(`${API.LESSONS}?moduleId=${params.moduleId}`);
+  //const data = await res.json();
 
   return {
     props: {

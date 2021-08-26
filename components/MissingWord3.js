@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import MultiChoiceSlide from './MultiChoiceSlide';
 import settings from '../config/settings';
 
+const english = settings.firstLanguage === 'en';
 
 const MissingWord3 = ({ slide, moveNextSlide }) => { 
-    const english = settings.firstLanguage === 'en';
     const [textToSpeak, setTextToSpeak] = useState();
     const [sentence, setSentence] = useState();
-    const [target, setTarget] = useState();
+    const [target, setTarget] = useState();    
 
     useEffect(() => {
         if (slide) {
-            const _target = slide.medias.find(item => item.isTarget === "1");
+            const _target = slide.medias.find(item => item.isTarget == "1");
 
             let _sentence, _textToSpeak;
             if (english) {

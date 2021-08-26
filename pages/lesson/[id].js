@@ -12,32 +12,34 @@ import Translate9 from "../../components/Translate9";
 import MatchingPairsImage11 from "../../components/MatchingPairsImage11";
 import Writing14 from "../../components/Writing14";
 import Bingo15 from "../../components/Bingo15";
+import Conversation16 from "../../components/Conversation16";
 import Question17 from "../../components/Question17";
 import Listening18 from "../../components/Listening18";
 import LessonProgress from "../../components/LessonProgress";
 
 import {
-  getLesson,
   getSlideAndMedia,
   textToSpeechEnglish,
   textToSpeechThai
 } from "../../services/dbAccess";
+import { getLessonSlides, getAllLessons, getSlide, getSlideMedia } from "../../services/supabaseClient";
 import { scoreContext } from "../../context/ScoreContext";
 import { setScore, setOrder, setCurrentSlide } from "../../context/scoreActions";
 import { useContext, useEffect } from "react";
 import settings from '../../config/settings';
 import api_en from '../../services/en.api';
 import api_th from '../../services/th.api';
+import { SlideshowOutlined } from "@material-ui/icons";
 
 const API = settings.firstLanguage === 'en' ? api_en : api_th;
+const englishSpeaker = settings.firstLanguage === "en";
 
-const Lesson = ({ lesson, firstSlide }) => {
+const Lesson = ({ slides, firstSlide }) => {
   const imageUrl = "https://sukhajata.com/images/";
   const { state, dispatch } = useContext(scoreContext);
   const { currentSlide, score, order } = state;
   const router = useRouter();
-  const englishSpeaker = settings.firstLanguage === "en";
-
+  
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
@@ -46,13 +48,13 @@ const Lesson = ({ lesson, firstSlide }) => {
 
   useEffect(() => {
     if (firstSlide) {
-      dispatch(setCurrentSlide(firstSlide));
+      dispatch(setCurrentSlide(firstSlide));            
       let _score = [];
-      lesson.slides.forEach(() => {
+      slides.forEach(() => {
         _score.push(0);
       });
       dispatch(setScore(_score));
-      //preload voice
+      // preload voice
       if (englishSpeaker) {
         textToSpeechThai("ค่ะ");         
       } else {
@@ -70,8 +72,8 @@ const Lesson = ({ lesson, firstSlide }) => {
     dispatch(setOrder(newOrder));
 
     window.scrollTo(0,0);
-    if (lesson.slides[newOrder]) {
-      const _currentSlide = await getSlideAndMedia(lesson.slides[newOrder].id);
+    if (slides[newOrder]) {
+      const _currentSlide = await getSlideAndMedia(slides[newOrder].id);
       dispatch(setCurrentSlide(_currentSlide));
     } else {
       //finished
@@ -89,63 +91,66 @@ const Lesson = ({ lesson, firstSlide }) => {
         spacing={2}
       >
         <Grid item style={{ width: "100%" }}>
-          {lesson && <LessonProgress slides={lesson.slides} />}
+          {slides && <LessonProgress slides={slides} />}
         </Grid>
         {currentSlide && (
-          <Grid item style={{ width: "100%" }}>
-            {currentSlide.categoryId === "1" && (
+          <Grid item style={{ width: "100%" }}>            
+            {currentSlide.categoryId == "1" && (
               <MultipleChoiceImage1
                 slide={currentSlide}
                 imageUrl={imageUrl}
                 moveNextSlide={moveNextSlide}
               />
             )}
-            {currentSlide.categoryId === "2" && (
+            {currentSlide.categoryId == "2" && (
               <MultipleChoiceText2
                 slide={currentSlide}
                 imageUrl={imageUrl}
                 moveNextSlide={moveNextSlide}
               />
             )}
-            {currentSlide.categoryId === "3" && (
+            {currentSlide.categoryId == "3" && (
               <MissingWord3
                 slide={currentSlide}
                 moveNextSlide={moveNextSlide}
               />
             )}
-            {currentSlide.categoryId === "4" && (
+            {currentSlide.categoryId == "4" && (
               <Teaching4
                 slide={currentSlide}
                 imageUrl={imageUrl}
                 moveNextSlide={moveNextSlide}
               />
             )}
-            {currentSlide.categoryId === "6" && (
+            {currentSlide.categoryId == "6" && (
               <MatchingPairsText6
                 slide={currentSlide}
                 moveNextSlide={moveNextSlide}
               />
             )}
-            {currentSlide.categoryId === "9" && (
+            {currentSlide.categoryId == "9" && (
               <Translate9 slide={currentSlide} moveNextSlide={moveNextSlide} />
             )}
-            {currentSlide.categoryId === "11" && (
+            {currentSlide.categoryId == "11" && (
               <MatchingPairsImage11
                 slide={currentSlide}
                 moveNextSlide={moveNextSlide}
                 imageUrl={imageUrl}
               />
             )}
-            {currentSlide.categoryId === "14" && (
+            {currentSlide.categoryId == "14" && (
               <Writing14 slide={currentSlide} moveNextSlide={moveNextSlide} />
             )}
-            {currentSlide.categoryId === "15" && (
+            {currentSlide.categoryId == "15" && (
               <Bingo15 slide={currentSlide} moveNextSlide={moveNextSlide} />
             )}
-            {currentSlide.categoryId === "17" && (
+            {currentSlide.categoryId == "16" && (
+              <Conversation16 slide={currentSlide} moveNextSlide={moveNextSlide} />
+            )}
+            {currentSlide.categoryId == "17" && (
               <Question17 slide={currentSlide} moveNextSlide={moveNextSlide} />
             )}
-            {currentSlide.categoryId === "18" && (
+            {currentSlide.categoryId == "18" && (
               <Listening18 slide={currentSlide} moveNextSlide={moveNextSlide} />
             )}
           </Grid>
@@ -183,22 +188,28 @@ export async function getServerSideProps({ params }) {
 }*/
 
 export async function getStaticProps({ params }) {
-  const lesson = await getLesson(params.id);
-  const firstSlide = await getSlideAndMedia(lesson.slides[0].id);
-
+  const slides = await getLessonSlides(params.id);    
+  // const firstSlide = await getSlideAndMedia(slides[0].id);
+  const firstSlide = await getSlide(slides[0].id);
+  // console.log(firstSlide);
+  const slideMedia = await getSlideMedia(firstSlide.id)
+  firstSlide.medias = slideMedia;
+  // console.log(firstSlide);
   return {
     props: {
-      lesson: lesson,
+      slides: slides,
       firstSlide: firstSlide,
     },
   }
 }
 
+
 export async function getStaticPaths() {
-  const res = await fetch(API.LESSONS);
-  const data = await res.json();
+  const data = await getAllLessons();  
+  // const res = await fetch(API.LESSONS);
+  // const data = await res.json();
   const paths = data.map(x => {
-    return { params: { id: x.id } };
+    return { params: { id: x.id.toString() } };
   });
 
   return {

@@ -11,15 +11,13 @@ import { shuffle, checkCase } from '../services/helpers';
 const MultiChoiceSlide = ({ slide, target, moveNextSlide, labelUpper, labelLower, textToSpeak, extra, upperText, lowerText }) => { 
     const [cards, setCards] = useState([]);
     const [result, setResult] = useState(0);
-
+    
     useEffect(() => {
         if (slide) {
-            const newCards = shuffle(slide.medias).map(media => {
-                return {
-                    ...media, 
-                    style: styles.defaultCard
-                }
-            });
+            const newCards = shuffle(slide.medias).map(media => ({
+                ...media, 
+                style: styles.defaultCard
+            }));
            
             setCards(newCards);
             setResult(0);
@@ -72,7 +70,7 @@ const MultiChoiceSlide = ({ slide, target, moveNextSlide, labelUpper, labelLower
                 <TextOption
                     key={media.id}
                     media={media}
-                    onClick={media.isTarget === "1" ? () => selectCorrect(media.id) : () => selectWrong(media.id) }
+                    onClick={media.isTarget == "1" ? () => selectCorrect(media.id) : () => selectWrong(media.id) }
                     style={media.style}
                     upperText={upperText === "english" ? checkCase(media.english) : media.thai} 
                     lowerText={lowerText === undefined ? undefined : media.phonetic }
