@@ -41,7 +41,7 @@ const Lesson = ({ slides, firstSlide }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (firstSlide) {
+    if (slides && firstSlide) {
       dispatch(setCurrentSlide(firstSlide));            
       let _score = [];
       slides.forEach(() => {
@@ -55,7 +55,7 @@ const Lesson = ({ slides, firstSlide }) => {
         textToSpeechEnglish('hi!');
       }
     }
-  }, [firstSlide]);
+  }, [slides, firstSlide]);
 
   const moveNextSlide = async result => {
     let newScore = score.splice(0);

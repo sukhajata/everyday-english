@@ -27,7 +27,7 @@ const AudioPrompt = ({
 
         } 
         
-    },[textToSpeak]);
+    },[textToSpeak, oldTextToSpeak]);
     
     return (
         <>
