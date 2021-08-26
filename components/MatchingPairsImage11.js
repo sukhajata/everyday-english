@@ -3,6 +3,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Image from 'next/image';
 
 import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles';
@@ -205,7 +206,7 @@ class MatchingPairsImage11 extends React.Component {
                         onClick={() => this.selectImage(2)}
                     >
                         <CardContent>
-                            <img 
+                            <Image 
                                 alt="" 
                                 className={classes.imageFit}  
                                 src={imageUrl + cards[2].imageFileName}
@@ -218,7 +219,7 @@ class MatchingPairsImage11 extends React.Component {
                         onClick={() => this.selectImage(3)}
                     >
                         <CardContent>
-                            <img 
+                            <Image 
                                 alt="" 
                                 className={classes.imageFit}  
                                 src={imageUrl + cards[3].imageFileName}

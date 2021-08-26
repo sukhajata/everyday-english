@@ -39,12 +39,6 @@ const Lesson = ({ slides, firstSlide }) => {
   const { state, dispatch } = useContext(scoreContext);
   const { currentSlide, score, order } = state;
   const router = useRouter();
-  
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
 
   useEffect(() => {
     if (firstSlide) {
@@ -80,6 +74,12 @@ const Lesson = ({ slides, firstSlide }) => {
       Router.push('/totals')
     }
   };
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
 
   return (
     <Container maxWidth="sm" style={{ marginTop: 20 }}>

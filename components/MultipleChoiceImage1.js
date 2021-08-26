@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Mood from '@material-ui/icons/Mood';
 import MoodBad from '@material-ui/icons/MoodBad';
+import Image from 'next/image';
 
 import styles from '../styles';
 import AudioPrompt from './AudioPrompt';
@@ -71,7 +72,7 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                     <>
                     {image.correct &&
                         <div key={image.id} style={{ position: 'relative' }}>
-                            <img 
+                            <Image 
                                 alt="" 
                                 style={styles.imageBlur}  
                                 src={imageUrl + image.imageFileName}
@@ -83,7 +84,7 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                     }
                     {image.wrong &&
                         <div key={image.id} style={{ position: 'relative' }}>
-                            <img 
+                            <Image 
                                 alt="" 
                                 style={styles.imageBlur}  
                                 src={imageUrl + image.imageFileName}
@@ -95,7 +96,7 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                     }
                     {!image.correct && !image.wrong &&
                         <div key={image.id} style={{ position: 'relative' }}>
-                            <img 
+                            <Image 
                                 alt="" 
                                 style={styles.imageFit}
                                 onClick={image.isTarget === "1" ? 

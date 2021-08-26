@@ -204,7 +204,7 @@ class MatchingPairsText6 extends React.Component {
                         </CardContent>
                     </Card>
                     <Typography variant="h6" style={{ visibility: 'hidden'}}>
-                        Too bad you won't see this!
+                        Too bad you won&apos;t see this!
                     </Typography>
                     <Card 
                         key="3"
