@@ -8,7 +8,7 @@ export default function MultipleChoiceText2 ({ slide, moveNextSlide }) {
     const [target, setTarget] = useState();
 
     useEffect(() => {
-        const _target = slide.medias.find(item => item.isTarget === "1");
+        const _target = slide.medias.find(item => item.isTarget === 1);
         setTarget(_target);
     }, [slide])
 

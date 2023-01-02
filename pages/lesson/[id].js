@@ -18,7 +18,6 @@ import Listening18 from "../../components/Listening18";
 import LessonProgress from "../../components/LessonProgress";
 
 import {
-  getSlideAndMedia,
   textToSpeechEnglish,
   textToSpeechThai
 } from "../../services/dbAccess";
@@ -67,8 +66,12 @@ const Lesson = ({ slides, firstSlide }) => {
 
     window.scrollTo(0,0);
     if (slides[newOrder]) {
-      const _currentSlide = await getSlideAndMedia(slides[newOrder].id);
-      dispatch(setCurrentSlide(_currentSlide));
+      const nextSlide = await getSlide(slides[newOrder].id);
+      const slideMedia = await getSlideMedia(nextSlide.id);
+      nextSlide.medias = slideMedia;
+      console.log(nextSlide.categoryId);
+      //const _currentSlide = await getSlideAndMedia(slides[newOrder].id);
+      dispatch(setCurrentSlide(nextSlide));
     } else {
       //finished
       Router.push('/totals')

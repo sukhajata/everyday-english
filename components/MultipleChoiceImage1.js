@@ -8,6 +8,8 @@ import AudioPrompt from './AudioPrompt';
 import { shuffle } from '../services/helpers';
 import settings from '../config/settings';
 
+const IMAGE_DIR = "/images/";
+
 const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => { 
     const [images, setImages] = useState([]);
     const [result, setResult] = useState(0);
@@ -24,7 +26,7 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                 }
             });
             setImages(_images);
-            const _target = slide.medias.find(item => item.isTarget === "1");
+            const _target = slide.medias.find(item => item.isTarget === 1);
             setTarget(_target);
             setResult(0);
         }
@@ -37,7 +39,6 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
             }
             return image;
         });
-        
         setImages(newImages);
         setTimeout(() => {
             const _result = result === -1 ? -1 : 1;
@@ -58,9 +59,9 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
     }
 
     return (
-        <>
+        <>        
         {slide && target && 
-            <>
+            <>            
                 <AudioPrompt 
                     audioFileName={slide.audioFileName}
                     textToSpeak={english ? target.thai : target.english}
@@ -75,7 +76,9 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                             <Image 
                                 alt="" 
                                 style={styles.imageBlur}  
-                                src={imageUrl + image.imageFileName}
+                                width="1200"
+                                height="600"
+                                src={IMAGE_DIR + image.imageFileName}
                             /> 
                             <div style={styles.middle}>
                                 <Mood style={styles.correctIcon} />
@@ -87,7 +90,9 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                             <Image 
                                 alt="" 
                                 style={styles.imageBlur}  
-                                src={imageUrl + image.imageFileName}
+                                width="1200"
+                                height="600"
+                                src={IMAGE_DIR + image.imageFileName}
                             /> 
                             <div style={styles.middle}>
                                 <Mood style={styles.wrongIcon} />
@@ -99,11 +104,13 @@ const MultipleChoiceImage1 = ({ slide, moveNextSlide, imageUrl }) => {
                             <Image 
                                 alt="" 
                                 style={styles.imageFit}
-                                onClick={image.isTarget === "1" ? 
+                                width="1200"
+                                height="600"
+                                onClick={image.isTarget === 1 ? 
                                     () => selectCorrect(image.id) :
                                     () => selectWrong(image.id)
                                 }
-                                src={imageUrl + image.imageFileName}
+                                src={IMAGE_DIR + image.imageFileName}
                             /> 
                         </div>
                     }

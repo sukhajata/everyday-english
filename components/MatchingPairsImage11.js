@@ -12,6 +12,8 @@ import { shuffle } from '../services/helpers';
 import { textToSpeechEnglish, textToSpeechThai } from '../services/dbAccess';
 import settings from '../config/settings';
 
+const IMAGE_DIR = "/images/";
+
 class MatchingPairsImage11 extends React.Component {
 
     state = {
@@ -207,9 +209,11 @@ class MatchingPairsImage11 extends React.Component {
                     >
                         <CardContent>
                             <Image 
+                                width="1200"
+                                height="600"
                                 alt="" 
                                 className={classes.imageFit}  
-                                src={imageUrl + cards[2].imageFileName}
+                                src={IMAGE_DIR + cards[2].imageFileName}
                             /> 
                         </CardContent>
                     </Card>
@@ -222,7 +226,9 @@ class MatchingPairsImage11 extends React.Component {
                             <Image 
                                 alt="" 
                                 className={classes.imageFit}  
-                                src={imageUrl + cards[3].imageFileName}
+                                width="1200"
+                                height="600"
+                                src={IMAGE_DIR + cards[3].imageFileName}
                             /> 
                         </CardContent>
                     </Card>

@@ -30,10 +30,11 @@ class Bingo15 extends React.Component {
                     className: nextProps.classes.defaultChip,
                 }
             })
+            const _target = nextProps.slide.medias.find(item => item.isTarget === 1);
             
             return {
                 chips,
-                target: nextProps.target,
+                target: _target,
                 slideId: nextProps.slide.id,
                 result: 0,
             }
@@ -57,6 +58,7 @@ class Bingo15 extends React.Component {
     render() {
         const { slide } = this.props;
         const { target, chips } = this.state;
+        console.log(target);
 
         return (
             <React.Fragment>
